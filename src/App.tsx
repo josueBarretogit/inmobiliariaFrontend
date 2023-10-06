@@ -1,13 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Button } from '@mui/base';
+import React, { useState } from 'react';
 import './App.css';
-import MainAppBar from './components/appBar';
-import { Typography, Rating, Badge } from '@mui/material';
-import { MailSharp } from '@mui/icons-material';
+import MainAppBar from './components/MainAppBar';
 
 function App() {
 
-  const [value, setValue] = React.useState<number | null>(4);
 
   return (
 
