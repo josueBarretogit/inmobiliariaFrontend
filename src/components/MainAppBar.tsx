@@ -9,8 +9,10 @@ import {
   Container,
   createTheme,
   IconButton,
+  InputLabel,
   Menu,
   MenuItem,
+  Select,
   styled,
   ThemeProvider,
   Toolbar,
@@ -90,132 +92,131 @@ function MainAppBar() {
     setAnchorElUser(null);
   };
 
-  const customTheme = createTheme({
-    palette: {
-      mode: "dark",
-      primary: {
-        main: "#030014",
-      },
-      secondary: purple,
-    },
-  });
-
   return (
     <>
-      <ThemeProvider theme={customTheme}>
-        <AppBar position="static" enableColorOnDark>
-          <Container maxWidth="xl">
-            <Toolbar>
-              <Avatar
-                alt="Logo inmobiliaria"
-                src={logoInmobiliaria}
-                variant="rounded"
-                sx={{
-                  mr: 2,
-                  width: 1 / 7,
-                  height: 100,
+      <AppBar position="static" enableColorOnDark>
+        <Container maxWidth="xl">
+          <Toolbar>
+            <Avatar
+              alt="Logo inmobiliaria"
+              src={logoInmobiliaria}
+              variant="rounded"
+              sx={{
+                mr: 2,
+                width: 100,
+                height: 100,
+              }}
+            />
+            <Typography
+              variant="h6"
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Inmobiliaria
+            </Typography>
+
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="medium"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
-              />
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                href="#app-bar-with-responsive-menu"
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
                 sx={{
-                  mr: 2,
-                  display: { xs: "none", md: "flex" },
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
+                  display: { xs: "block", md: "none" },
                 }}
               >
-                Inmobiliaria
-              </Typography>
-
-              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-                <IconButton
-                  size="medium"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleOpenNavMenu}
-                  color="inherit"
-                >
-                  <MenuIcon />
-                </IconButton>
-
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={handleCloseNavMenu}
-                  sx={{
-                    display: { xs: "block", md: "none" },
-                  }}
-                >
-                  {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
-
-              <Typography
-                variant="h5"
-                noWrap
-                sx={{
-                  mr: 2,
-                  display: { xs: "flex", md: "none" },
-                  flexGrow: 1,
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                Inmobiliaria
-              </Typography>
-
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page}
-                  </Button>
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
                 ))}
-              </Box>
+              </Menu>
+            </Box>
 
-              <Box sx={{ flexGrow: 0 }}>
-                <Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                    placeholder="Buscar…"
-                    inputProps={{ "aria-label": "search" }}
-                  />
-                </Search>
-              </Box>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </ThemeProvider>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0, flexDirection: "row" }}>
+              <Buscador />
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </>
+  );
+}
+
+function Buscador() {
+  return (
+    <>
+      <InputLabel id="demo-simple-select-label">Arriendo</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={1}
+        label="Age"
+      >
+        <MenuItem value={10}>Arriendo</MenuItem>
+        <MenuItem value={20}>venta</MenuItem>
+      </Select>
+      <InputLabel id="demo-simple-select-label">Tipo de inmueble</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={1}
+        label="Age"
+      >
+        <MenuItem value={10}>Arriendo</MenuItem>
+        <MenuItem value={20}>venta</MenuItem>
+      </Select>
+      <InputLabel id="demo-simple-select-label">Ciudad</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={1}
+        label="Age"
+      >
+        <MenuItem value={10}>Arriendo</MenuItem>
+        <MenuItem value={20}>venta</MenuItem>
+      </Select>
     </>
   );
 }
