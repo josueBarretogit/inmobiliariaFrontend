@@ -1,8 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
-import { Button } from "@mui/base";
 import { createTheme } from "@mui/material";
 import { purple } from "@mui/material/colors";
-import React, { useState } from "react";
 import "./App.css";
 import MainAppBar from "./components/MainAppBar";
 

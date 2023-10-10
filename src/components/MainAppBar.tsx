@@ -8,11 +8,13 @@ import {
   Button,
   Container,
   createTheme,
+  FormControl,
   IconButton,
   InputLabel,
   Menu,
   MenuItem,
   Select,
+  SelectChangeEvent,
   styled,
   ThemeProvider,
   Toolbar,
@@ -26,52 +28,11 @@ import logoInmobiliaria from "./../img/inmobiliariaLogo.jpg";
 
 const pages = ["Inicio", "Nosotros", "Arrendatario", "Pagar arriendo"];
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
-
 function MainAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -174,9 +135,7 @@ function MainAppBar() {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0, flexDirection: "row" }}>
-              <Buscador />
-            </Box>
+            <Buscador />
           </Toolbar>
         </Container>
       </AppBar>
@@ -185,38 +144,58 @@ function MainAppBar() {
 }
 
 function Buscador() {
+  const [arriendo, setArriendo] = React.useState("");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setArriendo(event.target.value as string);
+  };
+
   return (
     <>
-      <InputLabel id="demo-simple-select-label">Arriendo</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={1}
-        label="Age"
-      >
-        <MenuItem value={10}>Arriendo</MenuItem>
-        <MenuItem value={20}>venta</MenuItem>
-      </Select>
-      <InputLabel id="demo-simple-select-label">Tipo de inmueble</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={1}
-        label="Age"
-      >
-        <MenuItem value={10}>Arriendo</MenuItem>
-        <MenuItem value={20}>venta</MenuItem>
-      </Select>
-      <InputLabel id="demo-simple-select-label">Ciudad</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={1}
-        label="Age"
-      >
-        <MenuItem value={10}>Arriendo</MenuItem>
-        <MenuItem value={20}>venta</MenuItem>
-      </Select>
+      <FormControl>
+        <Box sx={{ display: "flex" }}>
+          <InputLabel id="demo-simple-select-label">Arriendo</InputLabel>
+          <Select
+            labelId="inputLabelArriendo"
+            id="selectLabelArriendo"
+            onChange={handleChange}
+            value={arriendo}
+            label="Arriendo"
+          >
+            <MenuItem value={1}>Arriendo</MenuItem>
+            <MenuItem value={2}>venta</MenuItem>
+          </Select>
+
+          <InputLabel id="demo-simple-select-label">
+            Tipo de inmueble
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={1}
+            label="Age"
+          >
+            <MenuItem value={1}>Casa</MenuItem>
+            <MenuItem value={3}>Bodega</MenuItem>
+            <MenuItem value={4}>Apartamento</MenuItem>
+            <MenuItem value={5}>Consultorio</MenuItem>
+            <MenuItem value={6}>Oficina</MenuItem>
+            <MenuItem value={7}>Local</MenuItem>
+          </Select>
+          <InputLabel id="demo-simple-select-label">Ciudad</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={1}
+            label="Age"
+          >
+            <MenuItem value={1}>Bogotá</MenuItem>
+            <MenuItem value={3}>Medellin</MenuItem>
+            <MenuItem value={4}>Cali</MenuItem>
+            <MenuItem value={5}>Cundinamarca</MenuItem>
+          </Select>
+        </Box>
+      </FormControl>
     </>
   );
 }
